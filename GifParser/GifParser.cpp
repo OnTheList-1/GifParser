@@ -11,12 +11,17 @@ unsigned createMask(unsigned a, unsigned b)
     return r;
 }
 
-int main()
+int main(int argc, char* argv[])
 {
-    /*
-        ColorTableSize = 3L * (1L << (SizeOfGlobalColorTable + 1));
-    */
-    std::ifstream gifFile("D:\\Dataset\\GIF\\3.gif", std::ios::binary);
+    std::ifstream gifFile;
+    if (argc < 2 || argc > 2)
+    {
+        std::cout << "Invalid Syntax.";
+        return -1;
+    }
+
+    gifFile.open(argv[1], std::ios::binary);
+
     if (!gifFile.is_open())
     {
         std::cout << "File can't be open\n";
