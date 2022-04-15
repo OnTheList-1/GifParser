@@ -1,0 +1,3 @@
+﻿  GifParser.cpp
+D:\GifParser\GifParser\GifParser.cpp(46,65): warning C4554: '<<': check operator precedence for possible error; use parentheses to clarify precedence
+  GifParser.vcxproj -> D:\GifParser\x64\Debug\GifParser.exe
