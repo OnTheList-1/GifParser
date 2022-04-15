@@ -24,9 +24,6 @@ int main()
     }
 
     int countLayers = 0;
-    bool isStillImageData = true;
-    bool isStillPlainTextData = true;
-    bool isStillCommentData = true;
 
     uint8_t data = 0x00;
     uint8_t buffer[768];
@@ -55,30 +52,24 @@ int main()
         {
             gifFile.read((char*)&data, 1);
             if (data == graphicsControlExtension)
-            {
                 gifFile.read((char*)buffer, 6);
-            }
+            
             if (data == plainTextExtension)
             {
-                while (isStillPlainTextData)
+                while (data != endBlock)
                 {
                     gifFile.read((char*)&data, 1);
-                    if (data == endBlock)
-                        break;
                     gifFile.read((char*)buffer, data);
                 }
             }
             if (data == applicationExtension)
-            {
                 gifFile.read((char*)buffer, 17);
-            }
+
             if (data == commentExtension)
             {
-                while (isStillCommentData)
+                while (data != endBlock)
                 {
                     gifFile.read((char*)&data, 1);
-                    if (data == endBlock)
-                        break;
                     gifFile.read((char*)buffer, data);
                 }
             }
@@ -86,19 +77,16 @@ int main()
         if (data == imageBlock)
         {
             gifFile.read((char*)buffer, 10);
-            while (isStillImageData)
+            while (data != endBlock)
             {
                 gifFile.read((char*)&data, 1);
-                if (data == endBlock)
-                    break;
                 gifFile.read((char*)buffer, data);
             }
             ++countLayers;
         }
 
     }
-    
-    //clean up
+   
 
     std::cout << "Layer Count: " << countLayers << std::endl;
     gifFile.close();
